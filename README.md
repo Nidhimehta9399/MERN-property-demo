@@ -36,3 +36,6 @@ npm install
 ```bash
 npm run dev
 ```
+
+### Demo
+https://www.awesomescreenshot.com/video/34295446?key=1375e2f8892f40ff11139b4231ab7d74
