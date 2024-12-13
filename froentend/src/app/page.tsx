@@ -8,12 +8,20 @@ import {
   getProperty,
   getPropertyById,
 } from "@/lib/reducer/PropertySlice";
+import ChatIcon from "@/icons/chat";
+import CloseIcon from "@/icons/close";
 
 import { useRouter } from "next/navigation";
 
 import useAuth from "./hooks/useAuth";
 
+import Chat from "./chat/page";
 import {
+  ChatBody,
+  ChatButton,
+  ChatContainer,
+  ChatHeader,
+  ChatText,
   StyledButton,
   StyledHomePageWrapper,
   StyledPropertyList,
@@ -23,6 +31,8 @@ import { AddPropertyModal, Header, Property } from "./components";
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
   const [edit, setEdit] = useState(false);
+  const [isChatOpen, setIsChatOpen] = useState(false);
+
   const dispatch = useDispatch();
   const router = useRouter();
   const { isAuthenticated, isLoading } = useAuth();
@@ -53,6 +63,10 @@ export default function Home() {
     } catch (error: any) {
       console.log(error.message);
     }
+  };
+
+  const toggleChat = () => {
+    setIsChatOpen(!isChatOpen);
   };
 
   useEffect(() => {
@@ -132,6 +146,24 @@ export default function Home() {
           />
         ))}
       </StyledPropertyList>
+
+      <ChatButton onClick={toggleChat}>
+        <ChatIcon size={24} />
+      </ChatButton>
+      {isChatOpen && (
+        <ChatContainer>
+          <ChatHeader>
+            <ChatText>Chat</ChatText>
+            <div onClick={toggleChat}>
+              <CloseIcon className="close-icon" size={24} />
+            </div>
+          </ChatHeader>
+          <ChatBody>
+            <Chat />
+          </ChatBody>
+        </ChatContainer>
+      )}
+
       {isOpen && (
         <AddPropertyModal
           open={isOpen}
